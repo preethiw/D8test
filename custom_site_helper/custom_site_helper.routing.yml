@@ -1,0 +1,11 @@
+custom_site_helper.jsonpage:
+  path: '/page_json/{key}/{node}'
+  defaults:
+    _controller: '\Drupal\custom_site_helper\Controller\JsonController::jsonContent'   
+  requirements:
+    _custom_access: '\Drupal\custom_site_helper\Controller\JsonController::access'
+    _content_type:  'page'
+  options:
+    parameters:
+      node:
+        type: 'entity:node'

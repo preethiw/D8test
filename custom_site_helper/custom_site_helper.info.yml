@@ -1,0 +1,7 @@
+name: Custom site helper
+description: 'Modifies basic site settings'
+type: module
+package: Custom
+core: '8.x'
+dependencies:
+  - drupal:serialization

@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file custom_site_helper.module
+ * Alter the configuration for the site information of the website.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function custom_site_helper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if ($form_id == 'system_site_information_settings') {
+    $site_api_key = \Drupal::config('custom_site_helper.settings')->get('siteapikey');
+    $form['site_information']['siteapikey'] = [
+      '#type' => 'textfield',
+      '#title' => t("Site API Key"),
+      '#default_value' => $site_api_key,
+      '#placeholder' => t("No API Key yet"),
+    ];
+    $form['actions']['submit']['#value'] = t('Update configuration');
+    $form['#submit'][] = 'custom_site_helper_form_system_site_information_settings_form_submit';
+  }
+}
+
+/**
+ * Submit handler for custom_site_helper_form_alter().
+ */
+function custom_site_helper_form_system_site_information_settings_form_submit($form, FormStateInterface $form_state) {
+  $site_old_api_key = \Drupal::config('custom_site_helper.settings')->get('siteapikey');
+  $site_new_api_key = $form_state->getValue('siteapikey');
+  $flag = FALSE;
+  \Drupal::configFactory()->getEditable('custom_site_helper.settings')
+    ->set('siteapikey', $site_new_api_key)
+    ->save();
+  // Display site api key message when the key is updated.
+  if ($flag == empty($site_new_api_key) && $site_new_api_key != $site_old_api_key) {
+    drupal_set_message(t('Site API Key has been saved with @site_key'), ['@site_key' => $site_new_api_key]);
+  }
+}
