@@ -8,7 +8,7 @@ use Drupal\Core\Access\AccessResult;
 use Symfony\Component\Routing\Route;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use \Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Controller for the jsonpage of the node.
@@ -45,7 +45,7 @@ class JsonController extends ControllerBase {
    * Get the json format of the node.
    *
    * @return json
-   *   Returns json response off the node.
+   *   Returns json response of the node.
    */
   public function jsonContent($key, NodeInterface $node) {
 
